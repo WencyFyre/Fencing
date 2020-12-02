@@ -39,7 +39,7 @@ namespace FencingGame.Model
                 Table.PlayerChanged += (sender, e) => PlayerChanged?.Invoke(this, e);
                 PlayerChanged?.Invoke(this, Table.CurrentPlayer);
 
-                TableChanged?.Invoke(this, new EventArgs());
+                TableChanged?.Invoke(this,  new EventArgs());
             }
         }
         public Size GameSize => Table.GameSize;
