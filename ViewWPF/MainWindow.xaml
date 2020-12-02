@@ -1,0 +1,43 @@
+﻿<Window x:Class="ViewWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ViewWPF"
+        mc:Ignorable="d"
+        Title="Elkerítés" Height="649" Width="579">
+    <Grid>
+        <DockPanel LastChildFill="False">
+            <Menu Height="15" DockPanel.Dock="Top">
+                <MenuItem Header="Új játék" >
+                    <MenuItem Header="6 × 6" Command="{Binding NewGame}" CommandParameter="{Binding Small}"/>
+                    <MenuItem Header="8 × 8" Command="{Binding NewGame}" CommandParameter="{Binding Medium}"/>
+                    <MenuItem Header="10 × 10" Command="{Binding NewGame}" CommandParameter="{Binding Large}" />
+                </MenuItem>
+                <MenuItem Header="Mentés" Command="{Binding SaveGame}"/>
+                <MenuItem Header="Betöltés" Command="{Binding LoadGame}"/>
+            </Menu>
+            <Viewbox Height="auto" Width="auto" Stretch="Uniform">
+                <Grid>
+                    <ItemsControl ItemsSource="{Binding GameTable}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Command="{Binding Click}" 
+                                        Background="{Binding BackColor}" 
+                                        IsEnabled ="{Binding Enabled}" 
+                                        Mouse.MouseEnter="{Binding Hovered}" 
+                                        Mouse.MouseLeave="{Binding HoverLeaved}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </Viewbox>
+            <StatusBar DockPanel.Dock="Bottom" Height="15">
+                <Label Content="{Binding BluePoints}" />
+                <Label Content="{Binding RedPoints}"/>
+                <Label Content="{Binding CurrentPlayer}"/>
+            </StatusBar>
+        </DockPanel>
+
+    </Grid>
+</Window>
