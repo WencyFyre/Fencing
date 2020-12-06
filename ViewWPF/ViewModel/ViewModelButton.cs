@@ -58,9 +58,9 @@ namespace FencingGame
         }
 
 
-        public DelegateCommand? Click { get; init; }
-        public DelegateCommand? Hovered { get; init; }
-        public DelegateCommand? HoverLeaved { get; init; }
+        public DelegateCommand? Click { get; set; }
+        public DelegateCommand? Hovered { get; set; }
+        public DelegateCommand? HoverLeaved { get; set; }
     }
    
 }

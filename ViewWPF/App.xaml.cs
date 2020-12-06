@@ -81,7 +81,7 @@ namespace FencingGame
 
         private void _viewModel_NewGameEvent(object? sender, object? e)
         {
-            if (e is not null) _model!.NewGame((FencingGame.Persistence.GameSize)e);
+            if (e != null) _model!.NewGame((FencingGame.Persistence.GameSize)e);
         }
 
        
