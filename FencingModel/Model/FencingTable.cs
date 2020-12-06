@@ -44,7 +44,7 @@ namespace FencingGame.Model
         public event EventHandler<(int, int)>? FieldChanged;
         public event EventHandler<FieldType>? PlayerChanged;
 
-        public Size GameSize { get; set; }
+        public FencingGame.Persistence.GameSize GameSize { get; set; }
 
         public string Extension => "sav";
 
@@ -68,7 +68,7 @@ namespace FencingGame.Model
         }
 
 
-        public FencingTable(Size size)
+        public FencingTable(FencingGame.Persistence.GameSize size)
         {
             GameSize = size;
             _field = new FieldType[(int)size, (int)size];

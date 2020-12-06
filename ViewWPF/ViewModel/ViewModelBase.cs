@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace FencingGame.ViewModel
+namespace FencingGame
 {
     public abstract class ViewModelBase : INotifyPropertyChanged
     {

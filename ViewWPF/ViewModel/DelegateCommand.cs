@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 
-namespace FencingGame.ViewModel
+namespace FencingGame
 {
     public class DelegateCommand : ICommand
     {

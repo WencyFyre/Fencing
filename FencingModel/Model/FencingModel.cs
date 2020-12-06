@@ -24,7 +24,7 @@ namespace FencingGame.Model
         {
             get
             {
-                if (_table is null) Table = new FencingTable(Size.Small);
+                if (_table is null) Table = new FencingTable(Persistence.GameSize.Small);
                 return _table!;
             }
 
@@ -42,7 +42,7 @@ namespace FencingGame.Model
                 TableChanged?.Invoke(this,  new EventArgs());
             }
         }
-        public Size GameSize => Table.GameSize;
+        public GameSize GameSize => Table.GameSize;
 
 
 
@@ -75,7 +75,7 @@ namespace FencingGame.Model
             }
         }
 
-        public void NewGame(Size size = Size.Small)
+        public void NewGame(FencingGame.Persistence.GameSize size = GameSize.Small)
         {
             Table = new FencingTable(size);
             IsHorizontal = true;

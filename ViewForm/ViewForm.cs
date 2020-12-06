@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using FencingGame.Model;
+using FencingGame.Persistence;
 
 namespace FencingGame
 {
@@ -22,9 +23,9 @@ namespace FencingGame
             _buttons = new Dictionary<(int, int), Button>() ;
             
 
-            this.toolStripLargeNewGame.Click += (sender, e) => NewGame(Model.Size.Large);
-            this.toolStripMediumNewGame.Click += (sender, e) => NewGame(Model.Size.Medium);
-            this.toolStripSmallNewGame.Click += (sender, e) => NewGame(Model.Size.Small);
+            this.toolStripLargeNewGame.Click += (sender, e) => NewGame(Persistence.GameSize.Large);
+            this.toolStripMediumNewGame.Click += (sender, e) => NewGame(Persistence.GameSize.Medium);
+            this.toolStripSmallNewGame.Click += (sender, e) => NewGame(Persistence.GameSize.Small);
             
             this.toolStripSave.Click += (sender, e) =>
             {
@@ -162,7 +163,7 @@ namespace FencingGame
             }
         }
 
-        private void NewGame(Model.Size size)
+        private void NewGame(FencingGame.Persistence.GameSize size)
         {
             _model.NewGame(size);
             SetupTable();

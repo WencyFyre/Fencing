@@ -25,10 +25,10 @@ namespace FencingTest
 
 
         [DataTestMethod]
-        [DataRow(Size.Small)]
-        [DataRow(Size.Medium)]
-        [DataRow(Size.Large)]
-        public void FencingModelNewGame(Size size)
+        [DataRow(GameSize.Small)]
+        [DataRow(GameSize.Medium)]
+        [DataRow(GameSize.Large)]
+        public void FencingModelNewGame(GameSize size)
         {
             _model.NewGame(size);
             for (int i = 0; i < (int)size; i++)
@@ -87,15 +87,15 @@ namespace FencingTest
         public void FencingLoadTest()
         {
             var table = _mockedTable;
-            _model.NewGame(Size.Medium);
-            for (int i = 0; i < (int)Size.Medium; i++)
-                for (int j = 0; j < (int)Size.Medium; j++)
+            _model.NewGame(GameSize.Medium);
+            for (int i = 0; i < (int)GameSize.Medium; i++)
+                for (int j = 0; j < (int)GameSize.Medium; j++)
                 {
                     Assert.AreEqual(FieldType.NoPlayer, _model.Table.GetFieldType((i, j)), "Field not NoPlayer");
                 }
             LoadAsync();
-            for (int i = 0; i < (int)Size.Medium; i++)
-                for (int j = 0; j < (int)Size.Medium; j++)
+            for (int i = 0; i < (int)GameSize.Medium; i++)
+                for (int j = 0; j < (int)GameSize.Medium; j++)
                 {
                     Assert.AreEqual(table.GetFieldType((i, j)), _model.Table.GetFieldType((i, j)), "Field not NoPlayer");
                 }
@@ -117,7 +117,7 @@ namespace FencingTest
 
         public async void Init()
         {
-            _mockedTable = new FencingTable(Size.Small);
+            _mockedTable = new FencingTable(GameSize.Small);
             _mockedTable = JsonConvert.DeserializeObject<FencingTable>("{\"_field\":[[1,1,1,0,0,0],[1,0,0,0,0,0],[1,1,0,0,0,0],[0,0,0,1,1,0],[0,0,0,2,0,0],[0,2,2,2,2,2]],\"CurrentPlayer\":2,\"GameSize\":6,\"Extension\":\"sav\"}");
 
             _mock = new Mock<IFencingDataAccess<FencingTable>>();

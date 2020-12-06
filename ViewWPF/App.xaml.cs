@@ -6,11 +6,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using FencingGame.Model;
-using FencingGame.ViewModel;
 using FencingGame.Persistence;
 using Microsoft.Win32;
 
-namespace ViewWPF
+namespace FencingGame
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -29,28 +28,27 @@ namespace ViewWPF
         private void App_Startup(object sender, StartupEventArgs e)
         {
             _model = new FencingModel(new FileDataAccess<FencingTable>());
-            _model.GameOver += _model_GameOver;
-            _model.PlayerChanged += _model_PlayerChanged;
-            _model.TableChanged += _model_TableChanged;
-            _model.GameOver += _model_GameOver;
             _viewModel = new ViewModel(_model);
             _viewModel.LoadGameEvent += _viewModel_LoadGameEvent;
             _viewModel.SaveGameEvent += _viewModel_SaveGameEvent;
             _viewModel.NewGameEvent += _viewModel_NewGameEvent;
-
+            _viewModel.ChangeOrientationEvent += _viewModel_ChangeOrientationEvent;
+            _model.PlayerChanged += _viewModel.OnPlayerChanged;
+            _model.TableChanged += _viewModel.OnTableChanged;
+            _model.GameOver += _model_GameOver;
             _model.GameFieldChanged += _viewModel.OnGameFieldChanged;
 
-
+            _model.GameFieldChanged += _viewModel.OnGameFieldChanged;
             _view = new MainWindow
             {
                 DataContext = _viewModel,
             };
             _view.Show();
+        }
 
-
-
-
-
+        private void _viewModel_ChangeOrientationEvent(object? sender, EventArgs e)
+        {
+            _model?.ChangeOrientation();
         }
 
         private void _viewModel_SaveGameEvent(object? sender, EventArgs e)
@@ -63,11 +61,11 @@ namespace ViewWPF
             };
             if (saveDialog.ShowDialog() ?? false)
             {
-                _model.SaveAsync(saveDialog.FileName);
+                _model?.SaveAsync(saveDialog.FileName);
             }
         }
 
-        private async void _viewModel_LoadGameEvent(object? sender, EventArgs e)
+        private void _viewModel_LoadGameEvent(object? sender, object e)
         {
             OpenFileDialog openDialog = new OpenFileDialog
             {
@@ -77,24 +75,16 @@ namespace ViewWPF
             };
             if (openDialog.ShowDialog() ?? false)
             {
-                await _model.LoadGameAsync(openDialog.FileName);
+                 _model?.LoadGameAsync(openDialog.FileName);
             }
         }
 
         private void _viewModel_NewGameEvent(object? sender, object? e)
         {
-            if (e is not null) _model!.NewGame((FencingGame.Model.Size)e);
+            if (e is not null) _model!.NewGame((FencingGame.Persistence.GameSize)e);
         }
 
-        private void _model_TableChanged(object? sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void _model_PlayerChanged(object? sender, FieldType e)
-        {
-            throw new NotImplementedException();
-        }
+       
 
         private void _model_GameOver(object? sender, FieldType e)
         
@@ -102,8 +92,8 @@ namespace ViewWPF
                 MessageBox.Show(
                      e switch
                      {
-                         FencingGame.Persistence.FieldType.BluePlayer => "A kék nyert " + _model.BluePoints + " ponttal!",
-                         FencingGame.Persistence.FieldType.RedPlayer => "A piros nyert " + _model.BluePoints + " ponttal",
+                         FencingGame.Persistence.FieldType.BluePlayer => "A kék nyert " + _model?.BluePoints + " ponttal!",
+                         FencingGame.Persistence.FieldType.RedPlayer => "A piros nyert " + _model?.BluePoints + " ponttal",
                          FencingGame.Persistence.FieldType.NoPlayer => "Döntetlen!",
                          _ => "Hiba történt a kiértékelés során"
                      });
@@ -111,14 +101,11 @@ namespace ViewWPF
             
         }
 
-        private void _model_GameFieldChanged(object? sender, (int, int) e)
-        {
-            throw new NotImplementedException();
-        }
+     
 
-        private void NewGame(FencingGame.Model.Size size)
+        private void NewGame(FencingGame.Persistence.GameSize size)
         {
-            _model.NewGame(size);
+            _model?.NewGame(size);
         }
     }
 }

@@ -1,23 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using FencingGame.Persistence;
 
-namespace FencingGame.ViewModel
+namespace FencingGame
 {
     public class ViewModelButton : ViewModelBase
     {
-        private Color _BackColor;
-        private bool _Enabled;
-        public Color BackColor
+        private FieldType _BackColor;
+        private bool _Enabled = true;
+        private int _Row;
+        private int _Column;
+        public int Row {
+            get => _Row; set
+            {
+                if (_Row != value)
+                {
+                    _Row = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public int Column {
+            get => _Column; set
+            {
+                if (_Column != value)
+                {
+                    _Column = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        public FieldType BackColor
         {
             get => _BackColor; set
             {
                 if (_BackColor != value)
                 {
-                    _BackColor = value;
+                    _BackColor = value ;
                     OnPropertyChanged();
                 }
             }
@@ -33,6 +56,8 @@ namespace FencingGame.ViewModel
                 }
             }
         }
+
+
         public DelegateCommand? Click { get; init; }
         public DelegateCommand? Hovered { get; init; }
         public DelegateCommand? HoverLeaved { get; init; }
