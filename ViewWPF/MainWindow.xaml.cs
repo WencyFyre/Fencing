@@ -23,6 +23,7 @@ namespace FencingGame
         public MainWindow()
         {
             InitializeComponent();
+            
         }
     }
 }

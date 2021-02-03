@@ -26,7 +26,7 @@
                 <ItemsControl ItemsSource="{Binding GameTable}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <Grid>
+                            <Grid x:Name="tábla">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
